@@ -1,0 +1,60 @@
+
+============================================================
+[2026-05-09 19:23] Free — Free entry — write about any Ableton feature
+Score: 9/10  |  Words: 58
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Chorus-Ensemble is time modulation device developed inside Live 12 and earlier versions. It serves as a chorus effect with multiple modes(**Chorus**, **Ensemble**,**Vibrato**) each tailoring to different use. With the latest update, the **Clasic** mode has been renamed to **Chorus** to better reflect it resulting effect. The updated **Chorus** mode features two new parameters with which you can interact:
+
+ISSUES:
+  ⚠ [Conciseness] 58 words — aim for 50 or fewer. Cut filler and redundant context.
+============================================================
+
+============================================================
+[2026-05-09 19:27] Free — Free entry — write about any Ableton feature
+Score: 7/10  |  Words: 107
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Chorus-Ensemble is time modulation device developed inside Live 12 and earlier versions. It serves as a chorus effect with multiple modes(**Chorus**, **Ensemble**,**Vibrato**) each tailoring to different use. With the latest update, the **Clasic** mode has been renamed to **Chorus** to better reflect it resulting effect. The updated **Chorus** mode features two new parameters with which you can interact:
+ **Time** - you can now select the time between the delay lines as opposed to having them scaled dynamically per tap. This setting also included the previous behaviour by selecting **Auto**.
+- **Tap** - is a parameter which allows you to switch between a one or two tap delay.
+
+ISSUES:
+  ✗ [American English] "behaviour" → use "behavior"
+  ⚠ [Conciseness] 107 words — aim for 50 or fewer. Cut filler and redundant context.
+============================================================
+
+============================================================
+[2026-05-09 19:45] Free — Free entry — write about any Ableton feature
+Score: 9/10  |  Words: 108
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Chorus-Ensemble is time modulation device developed inside Live 12 and earlier versions. It serves as a chorus effect with multiple modes(**Chorus**, **Ensemble**,**Vibrato**) each tailoring to different use. With the latest update, the **Clasic** mode has been renamed to **Chorus** to better reflect it resulting effect. The updated **Chorus** mode features two new parameters with which you can interact:
+- **Time** - you can now select the time between the delay lines as opposed to having them scaled dynamically per tap. This setting also included the previous behaviour by selecting **Auto**.
+- **Tap** - is a parameter which allows you to switch between a one or two tap delay.
+
+ISSUES:
+  ✗ [American English] "behaviour" → use "behavior"
+============================================================
+
+============================================================
+[2026-05-10 01:02] Manual — Looper — basic recording workflow
+Score: 8/10  |  Words: 99
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input section is where you optimize tracking before you touch “tuning” parameters.The Input Pitch shows you the detected notes in letter notation and cents. Pitch Range (High,  Mid or Bass) selects the expected input range, making the detection more reliable. It's adisable that you use High for signals in a high frequency range, Mid for signals in a mid frequency range and, finally, Bass for signal in a lower frequency range. Input Gain (-24 to +24 dB) helps to trim the signal incoming into the detector for more accurate detection. At the bottom, Latency is displayed in milliseconds.
+
+ISSUES:
+  ⚠ [Paragraph length] This paragraph has 5 sentences — keep paragraphs to 4 sentences or fewer. Break dense paragraphs into smaller ones.
+  ⚠ [Passive voice] Possible passive voice detected: "displayed". Rewrite with an active subject where possible.
+============================================================
+
+============================================================
+[2026-05-10 01:02] Manual — Compressor — main controls
+Score: 10/10  |  Words: 71
+────────────────────────────────────────────────────────────
+SUBMISSION:
+You can set the frequency range for the audio input using one of the three Pitch Range toggles. This helps optimize the quality of the pitch estimation and correction. Use High for signals in a high frequency range, Mid for signals in a mid frequency range, and Bass for signals in a low frequency range. Each toggle has an LED that flashes when the incoming audio falls within its corresponding range.
+
+No issues found.
+============================================================

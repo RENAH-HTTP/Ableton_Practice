@@ -1,7 +1,7 @@
 # Report
----
+
 ## Sat -> Sun, 9-10 May
----
+
 #### Situation
 Most of my texts weren't meeting the requirements.. or I thought the results were not trackable. I wanted to practice and needed the tool to understand the structure and the guides for writing documentation in the style of Ableton. 
 

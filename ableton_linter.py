@@ -373,6 +373,46 @@ PASSIVE_PATTERNS = [
     r"\bis (shown|displayed|enabled|disabled|rendered|triggered|activated)\b",
 ]
 
+ACRONYMS = {
+    "midi": "MIDI", "mpe": "MPE", "cpu": "CPU", "gpu": "GPU",
+    "vst": "VST", "au": "AU", "aax": "AAX", "daw": "DAW",
+    "lfo": "LFO", "adsr": "ADSR", "osc": "OSC",
+}
+
+CONTRACTIONS = [
+    "don't", "can't", "won't", "isn't", "it's", "you're", "they're",
+    "doesn't", "didn't", "hasn't", "haven't", "couldn't", "wouldn't",
+    "we're", "i'm", "i've", "you've", "they've", "we've",
+    "i'd", "you'd", "they'd", "we'd", "that's", "there's", "what's",
+    "i'll", "you'll", "they'll", "we'll",
+]
+
+MINIMIZE_WORDS = [
+    "simply", "just", "easily", "straightforward", "obviously",
+    "of course", "clearly", "naturally", "trivially",
+]
+
+WEAK_OPENER_PATTERNS = [
+    r"^there (is|are|was|were)\b",
+    r"^it is\b",
+    r"^this is a\b",
+    r"^this allows\b",
+]
+
+REDUNDANT_PHRASES = {
+    "in order to":           "to",
+    "due to the fact that":  "because",
+    "at this point in time": "now",
+    "in the event that":     "if",
+    "on a regular basis":    "regularly",
+    "with the exception of": "except",
+}
+
+FILLER_PHRASES = [
+    "please note", "note that", "it is worth noting", "please be aware",
+    "it should be noted", "as you can see", "as mentioned",
+]
+
 # ─────────────────────────────────────────────────────────────────────────────
 # LINTER
 # ─────────────────────────────────────────────────────────────────────────────
@@ -533,6 +573,149 @@ def lint(text, entry_type):
                 "penalty": 1,
             })
             score -= 1
+
+    # 9. Acronym capitalisation
+    for lower_acr, correct_acr in ACRONYMS.items():
+        pattern = r'\b' + re.escape(lower_acr) + r'\b'
+        for m in re.finditer(pattern, text, re.IGNORECASE):
+            found = m.group(0)
+            if found != correct_acr:
+                issues.append({
+                    "severity": "error",
+                    "rule": "Acronym capitalisation",
+                    "detail": f'"{found}" should be "{correct_acr}" — acronyms are always all-caps in Ableton docs.',
+                    "penalty": 1,
+                })
+                score -= 1
+                break
+
+    # 10. Contractions
+    contraction_found = []
+    for contraction in CONTRACTIONS:
+        pattern = r'\b' + re.escape(contraction) + r'\b'
+        if re.search(pattern, lower):
+            contraction_found.append(contraction)
+    if contraction_found:
+        examples = ", ".join(f'"{c}"' for c in contraction_found[:2])
+        issues.append({
+            "severity": "error",
+            "rule": "No contractions",
+            "detail": f"Contractions found: {examples}. Use the full form (e.g. \"don't\" → \"do not\").",
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 11. Condescending / minimize words
+    minimize_found = []
+    for word in MINIMIZE_WORDS:
+        pattern = r'\b' + re.escape(word) + r'\b'
+        if re.search(pattern, lower):
+            minimize_found.append(word)
+    if minimize_found:
+        examples = ", ".join(f'"{w}"' for w in minimize_found[:2])
+        issues.append({
+            "severity": "warning",
+            "rule": "Minimize words",
+            "detail": f"{examples} — these make tasks sound trivial. Cut them or rephrase.",
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 12. Weak sentence openers
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+    weak_openers_found = []
+    for sent in sentences:
+        sent_lower = sent.strip().lower()
+        for pat in WEAK_OPENER_PATTERNS:
+            if re.match(pat, sent_lower):
+                weak_openers_found.append(sent.strip()[:40])
+                break
+    if weak_openers_found:
+        example = weak_openers_found[0]
+        issues.append({
+            "severity": "warning",
+            "rule": "Weak sentence opener",
+            "detail": f'"{example}..." — avoid starting sentences with "There is/are" or "It is". Lead with the subject.',
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 13. "Live" software name capitalisation
+    if re.search(r'\bableton live\b', lower) or re.search(r'\blive \d+', lower):
+        for m in re.finditer(r'\b(ableton live|live \d[\d.]*)\b', text, re.IGNORECASE):
+            found = m.group(0)
+            if found[0].islower() or found.split()[0].islower():
+                issues.append({
+                    "severity": "error",
+                    "rule": "Software name capitalisation",
+                    "detail": f'"{found}" — "Live" (the software) is always capitalised (e.g. "Live 12", "Ableton Live").',
+                    "penalty": 1,
+                })
+                score -= 1
+                break
+
+    # 14. Redundant phrases
+    for phrase, replacement in REDUNDANT_PHRASES.items():
+        if phrase in lower:
+            issues.append({
+                "severity": "warning",
+                "rule": "Redundant phrasing",
+                "detail": f'"{phrase}" → use "{replacement}" instead.',
+                "penalty": 1,
+            })
+            score -= 1
+
+    # 15. Grammar: "allows to" / "enables to" (missing "you")
+    if re.search(r'\ballow(s)? to\b', lower) or re.search(r'\benable(s)? to\b', lower):
+        issues.append({
+            "severity": "error",
+            "rule": "Grammar: allows/enables to",
+            "detail": '"allows to" and "enables to" are grammatically incorrect. Use "allows you to", "lets you", or "enables you to".',
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 16. Filler phrases
+    filler_found = [p for p in FILLER_PHRASES if p in lower]
+    if filler_found:
+        examples = ", ".join(f'"{p}"' for p in filler_found[:2])
+        issues.append({
+            "severity": "warning",
+            "rule": "Filler phrases",
+            "detail": f"{examples} — these add no information. Cut them entirely.",
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 17. Double spaces
+    if "  " in text:
+        issues.append({
+            "severity": "warning",
+            "rule": "Double spaces",
+            "detail": "Double spaces detected. Use a single space between words and after punctuation.",
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 18. Sentence-ending ellipsis
+    if re.search(r'\.\.\.\s*(\n|$)', text.strip()):
+        issues.append({
+            "severity": "warning",
+            "rule": "Trailing ellipsis",
+            "detail": '"..." at the end of a sentence implies an unfinished thought. Complete the sentence or cut it.',
+            "penalty": 1,
+        })
+        score -= 1
+
+    # 19. "etc." usage
+    if re.search(r'\betc\.?\b', lower):
+        issues.append({
+            "severity": "warning",
+            "rule": "Avoid etc.",
+            "detail": '"etc." is vague. Either complete the list or use a phrase like "and other controls".',
+            "penalty": 1,
+        })
+        score -= 1
 
     score = max(0, score)
     return issues, score, word_count
@@ -772,15 +955,26 @@ def show_feedback(entry_type, scenario, user_text):
             if iss["rule"] not in rules_seen:
                 rules_seen.add(iss["rule"])
                 rule_tips = {
-                    "American English":         "Ableton docs use American English throughout.",
-                    "No marketing language":    "Release notes describe facts, not feelings. If it belongs in an ad, cut it.",
-                    "User-facing language":     "The reader is a musician, not a developer.",
-                    "Paragraph length":         "Long paragraphs hide the point. Keep each one to 3 sentences max — split when ideas shift.",
-                    "Do not start with I/We":   "Lead with the subject: the feature, the fix, or the user.",
-                    "UI element capitalisation":"Named UI elements are proper nouns in Ableton docs. Capitalise them.",
-                    "Passive voice":            "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
-                    "Bug fix structure":        "Bug notes need two things: what broke and what now works.",
-                    "Release note structure":   "Release notes lead with what the user can DO, not what was added.",
+                    "American English":            "Ableton docs use American English throughout.",
+                    "No marketing language":       "Release notes describe facts, not feelings. If it belongs in an ad, cut it.",
+                    "User-facing language":        "The reader is a musician, not a developer.",
+                    "Paragraph length":            "Long paragraphs hide the point. Keep each one to 3 sentences max — split when ideas shift.",
+                    "Do not start with I/We":      "Lead with the subject: the feature, the fix, or the user.",
+                    "UI element capitalisation":   "Named UI elements are proper nouns in Ableton docs. Capitalise them.",
+                    "Passive voice":               "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
+                    "Bug fix structure":           "Bug notes need two things: what broke and what now works.",
+                    "Release note structure":      "Release notes lead with what the user can DO, not what was added.",
+                    "Acronym capitalisation":      "MIDI, MPE, CPU, LFO, DAW etc. are always written in all-caps in Ableton docs.",
+                    "No contractions":             "Technical documentation uses full forms: 'do not', 'cannot', 'it is'.",
+                    "Minimize words":              "Words like 'simply' or 'just' make tasks sound trivial. Cut them — the instruction is clear without them.",
+                    "Weak sentence opener":        "'There is/are' and 'It is' bury the real subject. Start with what the feature or action actually is.",
+                    "Software name capitalisation":"'Live' (the software) and version refs like 'Live 12' are always capitalised.",
+                    "Redundant phrasing":          "Shorter is clearer. 'in order to' → 'to', 'due to the fact that' → 'because'.",
+                    "Grammar: allows/enables to":  "'Allows to' is grammatically wrong. Use 'allows you to' or 'lets you'.",
+                    "Filler phrases":              "'Please note', 'note that' etc. add no information. Cut them entirely.",
+                    "Double spaces":               "Use a single space between words and after punctuation.",
+                    "Trailing ellipsis":           "'...' at the end signals an unfinished thought — not appropriate for release notes.",
+                    "Avoid etc.":                  "'etc.' is vague. Complete the list or write 'and other controls'.",
                 }
                 tip = rule_tips.get(iss["rule"], "")
                 print(f"  {yellow('→')} {bold(iss['rule'])}")

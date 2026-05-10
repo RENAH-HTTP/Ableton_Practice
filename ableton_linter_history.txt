@@ -123,3 +123,196 @@ This section contains multiple control which change different aspects of the qua
 ISSUES:
   ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
 ============================================================
+
+============================================================
+[2026-05-10 03:04] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 51
+────────────────────────────────────────────────────────────
+SUBMISSION:
+This section contains multiple control which change different aspects of the quantization process. With Correction Strenght you can adjust how strongly the audio is corrected to reach the target note. To combat the corrections made, Smooth, which has a range of 0ms t0 200ms, changes the interpolation time for less artifacts.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: Note in this case should not be capitalised, since it is not a UI element of Auto Shift, in my opinion.
+============================================================
+
+============================================================
+[2026-05-10 03:07] Manual — Looper — basic recording workflow
+Score: 9/10  |  Words: 62
+────────────────────────────────────────────────────────────
+SUBMISSION:
+In the audio device, there is a built in setting which changes the target musical scale. With Root & Scale you tell the device which target it should reach. Moreover, if Use Current Scale is enabled in the device title bar, Auto Shift will follow the active clip scale selected in the session (“scale awareness”), and the scale’s notes will be highlighted.
+
+ISSUES:
+  ⚠ [Passive voice] Possible passive voice detected: "enabled". Rewrite with an active subject where possible.
+============================================================
+
+============================================================
+[2026-05-10 03:07] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 61
+────────────────────────────────────────────────────────────
+SUBMISSION:
+In the audio device, there is a built in setting which changes the target musical scale. With Root & Scale you tell the device which target it should reach. You can use the parameters Use Current Scale which will prompt Auto Shift to follow the active clip scale selected in the session (“scale awareness”). Aftewards, the scale’s notes will be highlighted.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 03:09] Manual — Compressor — main controls
+Score: 9/10  |  Words: 42
+────────────────────────────────────────────────────────────
+SUBMISSION:
+If you want to build a custom scale, you can use Included Notes. This allows you to enable and disable note and make your personalized scale. 
+
+For further pitch adjustment, Pitch Shift transposes the sound after correction, while maintaining the target key.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: Again, note should not be capitalized here since it's not a UI element.
+  ✗ [UI element capitalisation] "correction" should be capitalised — it's a named UI element (e.g. "Correction").
+      ↳ DISPUTED: Same, correction is not a parameter in Auto Shift
+  ⚠ [Weak sentence opener] "This allows you to enable and disable no..." — avoid starting sentences with "There is/are" or "It is". Lead with the subject.
+============================================================
+
+============================================================
+[2026-05-10 18:55] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 75
+────────────────────────────────────────────────────────────
+SUBMISSION:
+You can select in this menu the **External Source** if you want to select and alternate source MIDI. The MIDI Mode includes the setting **Tapping Point**, where you can select the if you want to introduce the MIDI signal either Pre FX, Post FX or Post Mixer. You can select Post FX or Post Mixer to include, forx example, any audio effects which you might have on the track which you choose to sidechain from.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 19:00] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 71
+────────────────────────────────────────────────────────────
+SUBMISSION:
+You can select in this menu the **External Source** if you want to select and alternate source MIDI. The MIDI Mode includes the setting **Tapping Point**, where you can select if you want to introduce the MIDI signal either Pre FX, Post FX or Post Mixer. You can select Post FX or Post Mixer to include, for example, any audio effects which you might have on your desired MIDI input track.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 19:54] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 61
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Choose between two voice modes Mono and Poly to have access to one or up to 8 voices. The Mono mode provides a Glides setting which can be selected for sliding between note values. Polt Mode provides either 2, 4 or 8 voices for harmonization.
+
+Enabling MIDI Input causes Auto Shift to only output audio when it is receiving MIDI notes.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: Note shouldn't be capitalized here, it is not an UI element, but a musical note.
+============================================================
+
+============================================================
+[2026-05-10 19:56] Manual — Cabinet — companion to the Amp device
+Score: 9/10  |  Words: 137
+────────────────────────────────────────────────────────────
+SUBMISSION:
+At the bottom of the menu, you can select up to four sources of modulation as input from the MIDI track of choice. Auto Shift is reaching to the external track and pulling it's MIDI data and assing it to drive the mod writing.
+
+The Pitch Bend paramenter, abreviated PB, select by how much the pitch will is altered when using the Pitch Bend Wheel on your controller of choice.
+
+The MIDI Mode features an Envelope section which inludes Attack and Release parameteres which are visualized in the box to their right. Turning on Note Latch will make the last held MIDI note stay active even after the key has been released.
+
+The keyboard at the top shows which MIDI note is currently being received. The keys light up in real time while notes are being updated.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: Note is not a UI Element
+  ✗ [No contractions] Contractions found: "it's". Use the full form (e.g. "don't" → "do not").
+============================================================
+
+============================================================
+[2026-05-10 23:06] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 41
+────────────────────────────────────────────────────────────
+SUBMISSION:
+At the bottom of the menu, you can select up to four sources of modulation as input from the MIDI track of choice. Auto Shift is reaching to the external track and pulling the MIDI data to drive the mod writing.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 23:08] Manual — Cabinet — companion to the Amp device
+Score: 9/10  |  Words: 25
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Custom waveforms can be accessed in by selecting Waveform and selecting one of the multiple waveforms, which include stepped, sample and hold and random variants.
+
+ISSUES:
+  ⚠ [Passive voice] Possible passive voice detected: "accessed". Rewrite with an active subject where possible.
+============================================================
+
+============================================================
+[2026-05-10 23:09] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 24
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Custom waveforms are accessible in by selecting Waveform and selecting one of the multiple waveforms, which include stepped, sample and hold and random variants.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 23:12] Manual — Cabinet — companion to the Amp device
+Score: 7/10  |  Words: 106
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Auto Shift includes an LFO that can modulate the following values: Pitch, Formant, Volume, and Pan.
+
+Opt for the Reset parameters if the you want to retrigger the LFO at onsets. The onset can be either pitch detection in Quantizer mode, or notes in MIDI mode. The Delay and Attack parameters shape how the LFO fades in and fades out.
+
+Custom waveforms are accessible in by selecting Waveform and selecting one of the multiple waveforms, which include stepped, sample and hold and random variants.Optional, the Rate can run free or sync to tempo.
+
+The LFO affects the incoming signal whether or not pitch correction is enabled.
+
+ISSUES:
+  ✗ [UI element capitalisation] "correction" should be capitalised — it's a named UI element (e.g. "Correction").
+  ✗ [UI element capitalisation] "pitch correction" should be capitalised — it's a named UI element (e.g. "Pitch Correction").
+  ⚠ [Passive voice] Possible passive voice detected: "enabled". Rewrite with an active subject where possible.
+============================================================
+
+============================================================
+[2026-05-10 23:15] Manual — Cabinet — companion to the Amp device
+Score: 10/10  |  Words: 12
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The LFO affects the incoming signal even pitch correction is not on.
+
+ISSUES:
+  ✗ [UI element capitalisation] "correction" should be capitalised — it's a named UI element (e.g. "Correction").
+      ↳ DISPUTED: Pitch Correction is not an UI Elemement
+  ✗ [UI element capitalisation] "pitch correction" should be capitalised — it's a named UI element (e.g. "Pitch Correction").
+      ↳ DISPUTED: Pitch Correction is not an UI Elemement
+============================================================
+
+============================================================
+[2026-05-10 23:26] Manual — Cabinet — companion to the Amp device
+Score: 9/10  |  Words: 77
+────────────────────────────────────────────────────────────
+SUBMISSION:
+ibrato is and option useful subtle motion in the signal or harder pitch effects. It has an Amount option which can alter the signal by a maximum of 200 cents. You can adjust the Rate of the vibrato by a minimum of 2Hz or a maximum of 15Hz. Choosing a Fade In time selects how quickly the vibrato reaches its target value. Natural Vibrato offer the same effect but with small variations for a more organic feel.
+
+ISSUES:
+  ⚠ [Paragraph length] This paragraph has 5 sentences — keep paragraphs to 4 sentences or fewer. Break dense paragraphs into smaller ones.
+  ✗ [UI element capitalisation] "vibrato" should be capitalised — it's a named UI element (e.g. "Vibrato").
+      ↳ DISPUTED: Vibrato talks here about the musical term here not an ui element
+============================================================
+
+============================================================
+[2026-05-10 23:27] Manual — Cabinet — companion to the Amp device
+Score: 9/10  |  Words: 21
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Developed in collaboration with Softube,
+  Cabinet uses physical-modelling technology and is designed to be
+  used after Amp in a device chain.
+
+ISSUES:
+  ⚠ [Double spaces] Double spaces detected. Use a single space between words and after punctuation.
+============================================================

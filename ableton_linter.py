@@ -17,16 +17,17 @@ import random
 # ─────────────────────────────────────────────────────────────────────────────
 
 class C:
-    RESET   = "\033[0m"
-    BOLD    = "\033[1m"
-    DIM     = "\033[2m"
-    RED     = "\033[91m"
-    GREEN   = "\033[92m"
-    YELLOW  = "\033[93m"
-    BLUE    = "\033[94m"
-    MAGENTA = "\033[95m"
-    CYAN    = "\033[96m"
-    WHITE   = "\033[97m"
+    RESET     = "\033[0m"
+    BOLD      = "\033[1m"
+    DIM       = "\033[2m"
+    UNDERLINE = "\033[4m"
+    RED       = "\033[91m"
+    GREEN     = "\033[92m"
+    YELLOW    = "\033[93m"
+    BLUE      = "\033[94m"
+    MAGENTA   = "\033[95m"
+    CYAN      = "\033[96m"
+    WHITE     = "\033[97m"
 
 def col(color, text): return f"{color}{text}{C.RESET}"
 def bold(text):       return col(C.BOLD, text)
@@ -412,6 +413,121 @@ FILLER_PHRASES = [
     "please note", "note that", "it is worth noting", "please be aware",
     "it should be noted", "as you can see", "as mentioned",
 ]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# INLINE HIGHLIGHT HELPERS
+# ─────────────────────────────────────────────────────────────────────────────
+
+def get_mistake_spans(text):
+    """Return a sorted list of (start, end) character spans for every mistake."""
+    spans = []
+    lower = text.lower()
+
+    for brit in BRITISH_SPELLINGS:
+        for m in re.finditer(r'\b' + re.escape(brit) + r'\b', lower):
+            spans.append((m.start(), m.end()))
+
+    for word in MARKETING_WORDS:
+        for m in re.finditer(r'\b' + re.escape(word) + r'\b', lower):
+            spans.append((m.start(), m.end()))
+
+    for word in DEV_WORDS:
+        for m in re.finditer(re.escape(word.strip()), lower):
+            spans.append((m.start(), m.end()))
+
+    for element in KNOWN_UI_ELEMENTS:
+        for m in re.finditer(r'\b' + re.escape(element) + r'\b', text, re.IGNORECASE):
+            found = m.group(0)
+            if found == found.lower() and found != found.title():
+                spans.append((m.start(), m.end()))
+
+    for lower_acr, correct_acr in ACRONYMS.items():
+        for m in re.finditer(r'\b' + re.escape(lower_acr) + r'\b', text, re.IGNORECASE):
+            if m.group(0) != correct_acr:
+                spans.append((m.start(), m.end()))
+
+    for contraction in CONTRACTIONS:
+        for m in re.finditer(r'\b' + re.escape(contraction) + r'\b', lower):
+            spans.append((m.start(), m.end()))
+
+    for word in MINIMIZE_WORDS:
+        for m in re.finditer(r'\b' + re.escape(word) + r'\b', lower):
+            spans.append((m.start(), m.end()))
+
+    for phrase in REDUNDANT_PHRASES:
+        for m in re.finditer(re.escape(phrase), lower):
+            spans.append((m.start(), m.end()))
+
+    for phrase in FILLER_PHRASES:
+        for m in re.finditer(re.escape(phrase), lower):
+            spans.append((m.start(), m.end()))
+
+    for pat in PASSIVE_PATTERNS:
+        for m in re.finditer(pat, lower):
+            spans.append((m.start(), m.end()))
+
+    for pat in [r'\ballow(s)? to\b', r'\benable(s)? to\b']:
+        for m in re.finditer(pat, lower):
+            spans.append((m.start(), m.end()))
+
+    for m in re.finditer(r'\b(ableton live|live \d[\d.]*)\b', text, re.IGNORECASE):
+        found = m.group(0)
+        if found[0].islower() or found.split()[0].islower():
+            spans.append((m.start(), m.end()))
+
+    first_word = re.match(r'\b(\w+)\b', text)
+    if first_word and first_word.group(1).lower() in ("i", "we"):
+        spans.append((first_word.start(), first_word.end()))
+
+    for m in re.finditer(r'\betc\.?\b', lower):
+        spans.append((m.start(), m.end()))
+
+    for m in re.finditer(r'  ', text):
+        spans.append((m.start(), m.end()))
+
+    for m in re.finditer(r'\.\.\.', text):
+        spans.append((m.start(), m.end()))
+
+    # Weak sentence openers — highlight the opener phrase
+    sentence_starts = [0]
+    for m in re.finditer(r'(?<=[.!?])\s+', text):
+        sentence_starts.append(m.end())
+    for start in sentence_starts:
+        sent_lower = text[start:].lower()
+        for pat in WEAK_OPENER_PATTERNS:
+            wm = re.match(pat, sent_lower)
+            if wm:
+                spans.append((start, start + wm.end()))
+                break
+
+    return spans
+
+
+def render_highlighted(text, spans):
+    """Return text with mistake spans coloured red and underlined."""
+    if not spans:
+        return col(C.WHITE, text)
+
+    # Merge overlapping spans
+    merged = []
+    for span in sorted(spans):
+        if merged and span[0] <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], span[1]))
+        else:
+            merged.append(list(span))
+
+    ERROR = C.RED + C.UNDERLINE
+    result = []
+    prev = 0
+    for start, end in merged:
+        if prev < start:
+            result.append(col(C.WHITE, text[prev:start]))
+        result.append(col(ERROR, text[start:end]))
+        prev = end
+    if prev < len(text):
+        result.append(col(C.WHITE, text[prev:]))
+    return "".join(result)
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # LINTER
@@ -903,11 +1019,13 @@ def show_feedback(entry_type, scenario, user_text):
     divider()
     print()
 
-    # Echo submission
+    # Echo submission with inline mistake highlights
     print(col(C.DIM, "  Your submission:"))
     print()
-    for line in user_text.strip().split("\n"):
-        print(f"    {col(C.WHITE, line)}")
+    spans = get_mistake_spans(user_text.strip())
+    highlighted = render_highlighted(user_text.strip(), spans)
+    for line in highlighted.split("\n"):
+        print(f"    {line}")
     print()
     print(col(C.DIM, f"  Word count: {word_count}"))
     print()

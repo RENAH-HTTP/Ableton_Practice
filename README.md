@@ -35,8 +35,8 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 20. Avoid etc. — Complete the list or write and
 
 #### Next-Steps
-- ▢ Create a full release notes page for Live 12.4 with all new feature, improvements, and bug fix notes in the same structure as Ableton's official release notes page. This includes formatting according to all linter rules and no exceptions allowed. Not just one example, but all of it.
+- ▢ Create a full release notes page for Live 12.4 with all new feature, improvements, and bug fix notes in the same structure as Ableton's official release notes page. This includes formatting according to all linter rules and no exceptions allowed.
 - ▢ Include a before and after section on the documentation website. This includes one of the original stem separation release note changes from round one and one corrected with Ania's changes. Be sure to clearly label this section.
-- ▢ Linter every piece of writing I produce and include an analysis in the daily STAR report of what was found, how it was fixed, and what was learned. Documentation process over product.
+- ▢ Linter every piece of writing I produce and include an analysis in the daily STAR report of what was found, how it was fixed, and what was learned.
 - ▢ Create a one page introduction to the writing style guide. Why we write for users, why we use active voice, why we use American English, why we be concise. How we got here and why.
 - ▢ Create a full linter README file as proper documentation, including all installation steps, all rules and what they check for, examples and corrected code. This can be used as a documentation sample during the interview process.

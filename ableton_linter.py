@@ -854,7 +854,9 @@ def apply_basic_corrections(text):
 
 HISTORY_FILE = "ableton_linter_history.txt"
 
-def save_to_history(entry_type, scenario_title, user_text, issues, score, word_count):
+def save_to_history(entry_type, scenario_title, user_text, issues, score, word_count, disputes=None):
+    if disputes is None:
+        disputes = {}
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     with open(HISTORY_FILE, "a", encoding="utf-8") as f:
         f.write(f"\n{'='*60}\n")
@@ -864,9 +866,11 @@ def save_to_history(entry_type, scenario_title, user_text, issues, score, word_c
         f.write(f"SUBMISSION:\n{user_text.strip()}\n")
         if issues:
             f.write(f"\nISSUES:\n")
-            for iss in issues:
+            for i, iss in enumerate(issues):
                 marker = "✗" if iss["severity"] == "error" else "⚠"
                 f.write(f"  {marker} [{iss['rule']}] {iss['detail']}\n")
+                if i in disputes:
+                    f.write(f"      ↳ DISPUTED: {disputes[i]}\n")
         else:
             f.write("\nNo issues found.\n")
         f.write(f"{'='*60}\n")
@@ -1011,114 +1015,181 @@ def show_scenario(entry_type):
 
     show_feedback(entry_type, scenario, user_text)
 
-def show_feedback(entry_type, scenario, user_text):
+def show_dispute_screen(issues, disputes):
+    """Let the user select one flagged issue and argue against it."""
+    header()
+    print(bold("  DISPUTE A FLAG"))
+    divider()
+    print()
+    print(col(C.DIM, "  Which flag do you want to dispute?\n"))
+
+    for i, iss in enumerate(issues, 1):
+        icon = red("✗") if iss["severity"] == "error" else yellow("⚠")
+        disputed_tag = f"  {dim('[disputed]')}" if (i - 1) in disputes else ""
+        detail_short = iss["detail"][:70] + ("…" if len(iss["detail"]) > 70 else "")
+        print(f"  {cyan(str(i) + '.')} {icon} {bold(iss['rule'])}{disputed_tag}")
+        print(col(C.DIM, f"      {detail_short}"))
+        print()
+
+    choice = input(col(C.CYAN, "  Issue number (or Enter to cancel) › ")).strip()
+    if not choice:
+        return disputes
+
+    try:
+        idx = int(choice) - 1
+        if idx < 0 or idx >= len(issues):
+            raise ValueError
+    except ValueError:
+        print(red("\n  Invalid number.\n"))
+        input(dim("  Press Enter to continue..."))
+        return disputes
+
+    print()
+    iss = issues[idx]
+    print(col(C.DIM, f"  Flag:   [{iss['rule']}]"))
+    print(col(C.DIM, f"  Detail: {iss['detail']}"))
+    print()
+    print(col(C.DIM, "  State your argument — why should this flag not apply here?"))
+    reason = input(col(C.CYAN, "  Your argument › ")).strip()
+
+    if reason:
+        disputes[idx] = reason
+        print()
+        print(green("  Argument noted. This flag will not count against your score."))
+        print()
+
+    input(dim("  Press Enter to continue..."))
+    return disputes
+
+
+def show_feedback(entry_type, scenario, user_text, disputes=None):
+    if disputes is None:
+        disputes = {}
+
+    rule_tips = {
+        "American English":            "Ableton docs use American English throughout.",
+        "No marketing language":       "Release notes describe facts, not feelings. If it belongs in an ad, cut it.",
+        "User-facing language":        "The reader is a musician, not a developer.",
+        "Paragraph length":            "Long paragraphs hide the point. Keep each one to 3 sentences max — split when ideas shift.",
+        "Do not start with I/We":      "Lead with the subject: the feature, the fix, or the user.",
+        "UI element capitalisation":   "Named UI elements are proper nouns in Ableton docs. Capitalise them.",
+        "Passive voice":               "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
+        "Bug fix structure":           "Bug notes need two things: what broke and what now works.",
+        "Release note structure":      "Release notes lead with what the user can DO, not what was added.",
+        "Acronym capitalisation":      "MIDI, MPE, CPU, LFO, DAW etc. are always written in all-caps in Ableton docs.",
+        "No contractions":             "Technical documentation uses full forms: 'do not', 'cannot', 'it is'.",
+        "Minimize words":              "Words like 'simply' or 'just' make tasks sound trivial. Cut them — the instruction is clear without them.",
+        "Weak sentence opener":        "'There is/are' and 'It is' bury the real subject. Start with what the feature or action actually is.",
+        "Software name capitalisation":"'Live' (the software) and version refs like 'Live 12' are always capitalised.",
+        "Redundant phrasing":          "Shorter is clearer. 'in order to' → 'to', 'due to the fact that' → 'because'.",
+        "Grammar: allows/enables to":  "'Allows to' is grammatically wrong. Use 'allows you to' or 'lets you'.",
+        "Filler phrases":              "'Please note', 'note that' etc. add no information. Cut them entirely.",
+        "Double spaces":               "Use a single space between words and after punctuation.",
+        "Trailing ellipsis":           "'...' at the end signals an unfinished thought — not appropriate for release notes.",
+        "Avoid etc.":                  "'etc.' is vague. Complete the list or write 'and other controls'.",
+    }
+
     issues, score, word_count = lint(user_text, entry_type)
 
-    header()
-    print(bold("  EVALUATION"))
-    divider()
-    print()
+    while True:
+        # Effective score: restore penalty for each disputed issue
+        effective_score = score
+        for idx in disputes:
+            if idx < len(issues):
+                effective_score += issues[idx].get("penalty", 1)
+        effective_score = min(10, effective_score)
 
-    # Echo submission with inline mistake highlights
-    print(col(C.DIM, "  Your submission:"))
-    print()
-    spans = get_mistake_spans(user_text.strip())
-    highlighted = render_highlighted(user_text.strip(), spans)
-    for line in highlighted.split("\n"):
-        print(f"    {line}")
-    print()
-    print(col(C.DIM, f"  Word count: {word_count}"))
-    print()
-    divider()
-    print()
-
-    # Score
-    print_score(score)
-
-    # Issues
-    if not issues:
-        print(green("  ✓  No issues found. Clean entry!\n"))
-    else:
-        print(bold(f"  Found {len(issues)} issue(s):\n"))
-        for iss in issues:
-            print_issue(iss)
-
-    divider()
-    print()
-
-    # Corrected example
-    print(bold("  EXAMPLE RELEASE NOTE (from Ableton style):"))
-    print()
-    example_lines = wrap(scenario["example"], width=68, indent="  ")
-    print(col(C.GREEN, example_lines))
-    print()
-    
-    if scenario["example"] != scenario.get("example"):  # always show mechanical corrections
-        corrected = apply_basic_corrections(user_text)
-        if corrected != user_text:
-            print(bold("  MECHANICAL CORRECTIONS APPLIED:"))
-            print()
-            for line in corrected.strip().split("\n"):
-                print(f"    {col(C.YELLOW, line)}")
-            print()
-
-    divider()
-
-    # Tips summary
-    if issues:
-        print()
-        print(bold("  RULES TRIGGERED:"))
-        rules_seen = set()
-        for iss in issues:
-            if iss["rule"] not in rules_seen:
-                rules_seen.add(iss["rule"])
-                rule_tips = {
-                    "American English":            "Ableton docs use American English throughout.",
-                    "No marketing language":       "Release notes describe facts, not feelings. If it belongs in an ad, cut it.",
-                    "User-facing language":        "The reader is a musician, not a developer.",
-                    "Paragraph length":            "Long paragraphs hide the point. Keep each one to 3 sentences max — split when ideas shift.",
-                    "Do not start with I/We":      "Lead with the subject: the feature, the fix, or the user.",
-                    "UI element capitalisation":   "Named UI elements are proper nouns in Ableton docs. Capitalise them.",
-                    "Passive voice":               "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
-                    "Bug fix structure":           "Bug notes need two things: what broke and what now works.",
-                    "Release note structure":      "Release notes lead with what the user can DO, not what was added.",
-                    "Acronym capitalisation":      "MIDI, MPE, CPU, LFO, DAW etc. are always written in all-caps in Ableton docs.",
-                    "No contractions":             "Technical documentation uses full forms: 'do not', 'cannot', 'it is'.",
-                    "Minimize words":              "Words like 'simply' or 'just' make tasks sound trivial. Cut them — the instruction is clear without them.",
-                    "Weak sentence opener":        "'There is/are' and 'It is' bury the real subject. Start with what the feature or action actually is.",
-                    "Software name capitalisation":"'Live' (the software) and version refs like 'Live 12' are always capitalised.",
-                    "Redundant phrasing":          "Shorter is clearer. 'in order to' → 'to', 'due to the fact that' → 'because'.",
-                    "Grammar: allows/enables to":  "'Allows to' is grammatically wrong. Use 'allows you to' or 'lets you'.",
-                    "Filler phrases":              "'Please note', 'note that' etc. add no information. Cut them entirely.",
-                    "Double spaces":               "Use a single space between words and after punctuation.",
-                    "Trailing ellipsis":           "'...' at the end signals an unfinished thought — not appropriate for release notes.",
-                    "Avoid etc.":                  "'etc.' is vague. Complete the list or write 'and other controls'.",
-                }
-                tip = rule_tips.get(iss["rule"], "")
-                print(f"  {yellow('→')} {bold(iss['rule'])}")
-                if tip:
-                    print(col(C.DIM, f"    {tip}"))
+        header()
+        print(bold("  EVALUATION"))
+        divider()
         print()
 
-    # Save
-    save_to_history(entry_type, scenario["title"], user_text, issues, score, word_count)
-    print(col(C.DIM, f"  Session saved to {HISTORY_FILE}"))
-    print()
-    divider()
-    print()
+        # Echo submission with inline mistake highlights
+        print(col(C.DIM, "  Your submission:"))
+        print()
+        spans = get_mistake_spans(user_text.strip())
+        highlighted = render_highlighted(user_text.strip(), spans)
+        for line in highlighted.split("\n"):
+            print(f"    {line}")
+        print()
+        print(col(C.DIM, f"  Word count: {word_count}"))
+        print()
+        divider()
+        print()
 
-    # Loop
-    print(f"  {cyan('1.')} Try again with a new scenario")
-    print(f"  {cyan('2.')} Try the same scenario again")
-    print(f"  {cyan('3.')} Back to main menu")
-    print()
-    choice = input(col(C.CYAN, "  Select › ")).strip()
+        # Score
+        print_score(effective_score)
+        if disputes and effective_score != score:
+            n = sum(1 for i in disputes if i < len(issues))
+            print(col(C.DIM, f"  ({n} flag(s) disputed — score reflects your argument)\n"))
 
-    if choice == "1":
-        show_scenario(entry_type)
-    elif choice == "2":
-        show_feedback_retry(entry_type, scenario)
-    else:
+        # Issues
+        if not issues:
+            print(green("  ✓  No issues found. Clean entry!\n"))
+        else:
+            print(bold(f"  Found {len(issues)} issue(s):\n"))
+            for i, iss in enumerate(issues):
+                if i in disputes:
+                    rule_label = iss["rule"]
+                    print(f"{dim('  ◌')} {dim('[' + rule_label + ']')} {dim('[disputed]')}")
+                    print(col(C.DIM, wrap(iss["detail"], width=66, indent="      ")))
+                    print(col(C.DIM, f"      Your argument: {disputes[i]}"))
+                    print()
+                else:
+                    print_issue(iss)
+
+        divider()
+        print()
+
+        # Corrected example
+        print(bold("  EXAMPLE RELEASE NOTE (from Ableton style):"))
+        print()
+        example_lines = wrap(scenario["example"], width=68, indent="  ")
+        print(col(C.GREEN, example_lines))
+        print()
+
+        divider()
+
+        # Tips summary — skip tips for disputed issues
+        active_issues = [iss for i, iss in enumerate(issues) if i not in disputes]
+        if active_issues:
+            print()
+            print(bold("  RULES TRIGGERED:"))
+            rules_seen = set()
+            for iss in active_issues:
+                if iss["rule"] not in rules_seen:
+                    rules_seen.add(iss["rule"])
+                    tip = rule_tips.get(iss["rule"], "")
+                    print(f"  {yellow('→')} {bold(iss['rule'])}")
+                    if tip:
+                        print(col(C.DIM, f"    {tip}"))
+            print()
+
+        divider()
+        print()
+
+        # Options
+        print(f"  {cyan('1.')} Try again with a new scenario")
+        print(f"  {cyan('2.')} Try the same scenario again")
+        print(f"  {cyan('3.')} Back to main menu")
+        if issues:
+            print(f"  {cyan('4.')} Dispute a flag")
+        print()
+        choice = input(col(C.CYAN, "  Select › ")).strip()
+
+        if choice == "4" and issues:
+            disputes = show_dispute_screen(issues, disputes)
+            continue  # re-render with updated disputes
+
+        # Save on exit
+        save_to_history(entry_type, scenario["title"], user_text, issues, effective_score, word_count, disputes)
+        print(col(C.DIM, f"  Session saved to {HISTORY_FILE}"))
+        print()
+
+        if choice == "1":
+            show_scenario(entry_type)
+        elif choice == "2":
+            show_feedback_retry(entry_type, scenario)
         return
 
 def show_feedback_retry(entry_type, scenario):

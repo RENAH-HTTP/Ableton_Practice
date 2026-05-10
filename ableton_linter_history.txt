@@ -58,3 +58,68 @@ You can set the frequency range for the audio input using one of the three Pitch
 
 No issues found.
 ============================================================
+
+============================================================
+[2026-05-10 02:23] Manual — Looper — basic recording workflow
+Score: 8/10  |  Words: 73
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input section is where you optimize tracking before you touch “tuning” parameters. The Input Pitch shows you the detected notes in letter notation and cents. Pitch Range (High,  Mid or Bass) selects the expected input range, making the detection more reliable. It's adisable that you use High for signals in a high frequency range, Mid for signals in a mid frequency range and, finally, Bass for signal in a lower frequency range.
+
+ISSUES:
+  ✗ [No contractions] Contractions found: "it's". Use the full form (e.g. "don't" → "do not").
+  ⚠ [Double spaces] Double spaces detected. Use a single space between words and after punctuation.
+============================================================
+
+============================================================
+[2026-05-10 02:24] Manual — Looper — basic recording workflow
+Score: 9/10  |  Words: 74
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input section is where you optimize tracking before you touch “tuning” parameters. The Input Pitch shows you the detected notes in letter notation and cents. Pitch Range (High, Mid or Bass) selects the expected input range, making the detection more reliable. It is adisable that you use High for signals in a high frequency range, Mid for signals in a mid frequency range and, finally, Bass for signal in a lower frequency range.
+
+ISSUES:
+  ⚠ [Weak sentence opener] "It is adisable that you use High for sig..." — avoid starting sentences with "There is/are" or "It is". Lead with the subject.
+============================================================
+
+============================================================
+[2026-05-10 02:26] Manual — Looper — basic recording workflow
+Score: 9/10  |  Words: 73
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input section is where you optimize tracking before you touch “tuning” parameters. The Input Pitch shows you the detected notes in letter notation and cents. The Pitch Range (High, Mid or Bass) selects the expected input range, making the detection more reliable -  you can use High for signals in a high frequency range, Mid for signals in a mid frequency range and, finally, Bass for signal in a lower frequency range.
+
+ISSUES:
+  ⚠ [Double spaces] Double spaces detected. Use a single space between words and after punctuation.
+============================================================
+
+============================================================
+[2026-05-10 02:28] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 73
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input section is where you optimize tracking before you touch “tuning” parameters. The Input Pitch shows you the detected notes in letter notation and cents. The Pitch Range (High, Mid or Bass) selects the expected input range, making the detection more reliable - you can use High for signals in a high frequency range, Mid for signals in a mid frequency range and, finally, Bass for signal in a lower frequency range.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 02:32] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 73
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Input Gain, with the range bwetween -24 to +24 dB trims the signal incoming into the detector for more accurate detection. At the bottom, Latency is displaying in milliseconds the time difference between input and output of the audio device. For live performance scenarios, the Live Mode, which can be toggled in the title bar, reduces latency for performance. This setting can introduce gltiches depending on the speed of the pitch change.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-10 02:53] Manual — Looper — basic recording workflow
+Score: 9/10  |  Words: 51
+────────────────────────────────────────────────────────────
+SUBMISSION:
+This section contains multiple control which change different aspects of the quantization process. With Correction Strenght you can adjust how strongly the audio is corrected to reach the target note. To combat the corrections made, Smooth, which has a range of 0ms t0 200ms, changes the interpolation time for less artifacts.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+============================================================

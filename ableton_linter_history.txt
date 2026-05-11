@@ -378,3 +378,15 @@ The names for active peers are shown in the new Link drop-down menu in the Contr
 
 No issues found.
 ============================================================
+
+============================================================
+[2026-05-11 23:37] Release Note — Browser Filter View simplified
+Score: 8/10  |  Words: 141
+────────────────────────────────────────────────────────────
+SUBMISSION:
+A separate Link page has been added to Live's Settings. To send or receive audio, make sure that the feature is enabled on all the particpating devices and that you have selected the correct Audio Driver and Source in your Audio tab. Once all connected, your device is now discoverable for other devices connected on the same network. By going to the Preferences menu and navigating to the Link tab, you will find here, in the Control Bar at the bottom the available devices or peer you can connect to, along with their device name, status and buffer information. The Link Audio devices available can now be seen in the Input section of the selected Track. To receive audio, you can navigate to your desired audio track and change the input source to one of the available devices on your network.
+
+ISSUES:
+  ⚠ [Paragraph length] This paragraph has 6 sentences — keep paragraphs to 4 sentences or fewer. Break dense paragraphs into smaller ones.
+  ⚠ [Passive voice] Possible passive voice detected: "added", "enabled". Rewrite with an active subject where possible.
+============================================================

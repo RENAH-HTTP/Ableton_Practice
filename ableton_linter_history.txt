@@ -336,3 +336,24 @@ You can offset the starting point by using the offset control using the Offset c
 
 No issues found.
 ============================================================
+
+============================================================
+[2026-05-11 15:22] Manual — Compressor — main controls
+Score: 10/10  |  Words: 21
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Beat repeat effect contains at the bottom right corner a Volume control, a Decay control and 3 different mix options.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-11 15:26] Manual — Compressor — main controls
+Score: 9/10  |  Words: 60
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Beat Repeat effect allows 3 output modes: Mix combines the original signal and the repeated signal, Ins cuts the original signal when the repeat cycle takes place and resumes the original signal when the repeat cycle is done. Finally, Gate, which is most usefull when house on a return track, passes only the repetitions and never the original signal
+
+ISSUES:
+  ✗ [UI element capitalisation] "return track" should be capitalised — it's a named UI element (e.g. "Return Track").
+============================================================

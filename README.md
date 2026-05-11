@@ -4,6 +4,10 @@
 
 #### Situation
 I noticed that values for parameters are put in brackets. 
+"Warning:" strucures are allowed.
+Also ":", also "()"
+
+In this example - the "return track" is not capitalized: The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track. Why?
 
 #### Task
 Aimed to update the rules of writing the documentation of the desired Live element.
@@ -81,7 +85,7 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 - ▢ Create a full linter README file as proper documentation, including all installation steps, all rules and what they check for, examples and corrected code. This can be used as a documentation sample during the interview process.
 
 
-## Rules for Writing
+#z Rules for Writing
 1. American English — No British spellings (colour → color, grey → gray, programme → program, etc.)
 2. No marketing language — No exciting, powerful, innovative, seamless, revolutionary, game-changing, etc.
 3. User-facing language — No developer jargon (implemented, refactored, backend, API call, hotfix, deprecated, etc.)
@@ -107,3 +111,10 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 #### Update Log
 - 11 May - added rule nr. 21 "Parameter Values"
 - 09 May - Created the Rules list
+
+# Questions
+
+1. In this example - the **return track** is not capitalized: 
+"The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track."
+**Why?**
+2. 

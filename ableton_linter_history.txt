@@ -316,3 +316,23 @@ Developed in collaboration with Softube,
 ISSUES:
   ⚠ [Double spaces] Double spaces detected. Use a single space between words and after punctuation.
 ============================================================
+
+============================================================
+[2026-05-11 13:10] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 39
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The Interval Control allows you to select at which time interval the effect should take place. By setting the control, for example, to "1 Bar" your desired repeat effect will take place every 1 Bar of your selected signal.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-11 13:10] Manual — Looper — basic recording workflow
+Score: 10/10  |  Words: 27
+────────────────────────────────────────────────────────────
+SUBMISSION:
+You can offset the starting point by using the offset control using the Offset control. The values of the Offset range from "0" to "15/16" musical notes.
+
+No issues found.
+============================================================

@@ -9,14 +9,18 @@
 
 In this example - the "return track" is not capitalized: The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track. Why?
 
+Further more, release note structure is less rigid than the manual, leaving room for bullet point lists.
+
 #### Task
-Aimed to update the rules of writing the documentation of the desired Live element.
+Aimed to update the rules of writing the documentation of the desired Live element. And improve writing to match release note format. 
 
 #### Action
 Updated the linter app and added that to the extract rules at the bottom of this report.
+Read the latest Release notes for Live 12.4 and 12.3 and extracted more style quides from there. 
 
 #### Result
 Improved quality and accuracy of replicating the format.
+Defining clearly between Release note format and Manual format
 
 ## Sun, 10 May 
 
@@ -75,7 +79,6 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 18. Double spaces — Single space between words and after punctuation.
 19. Trailing ellipsis — ... at the end of a sentence implies an unfinished thought.
 20. Avoid etc. — Complete the list or write and
-21. 
 
 #### Next-Steps
 - ▢ Create a full release notes page for Live 12.4 with all new feature, improvements, and bug fix notes in the same structure as Ableton's official release notes page. This includes formatting according to all linter rules and no exceptions allowed.
@@ -85,7 +88,7 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 - ▢ Create a full linter README file as proper documentation, including all installation steps, all rules and what they check for, examples and corrected code. This can be used as a documentation sample during the interview process.
 
 
-#z Rules for Writing
+# Rules for Writing
 1. American English — No British spellings (colour → color, grey → gray, programme → program, etc.)
 2. No marketing language — No exciting, powerful, innovative, seamless, revolutionary, game-changing, etc.
 3. User-facing language — No developer jargon (implemented, refactored, backend, API call, hotfix, deprecated, etc.)
@@ -107,6 +110,12 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 19. Trailing ellipsis — ... at the end of a sentence implies an unfinished thought.
 20. Avoid etc. — Complete the list or write and
 21. Parameter Values - place parameter values in double quotes. 100% is "100%".
+
+**Release Note Only**
+1. Release note structure — must describe what the user can now DO (looks for: "can now", "lets you", "allows you", "use", "select", "access", etc.)
+
+**Bug Fix Only**
+1. Bug fix structure — must describe what broke (trigger condition) AND what now works (outcome after fix)
 
 #### Update Log
 - 11 May - added rule nr. 21 "Parameter Values"

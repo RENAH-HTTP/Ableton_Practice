@@ -357,3 +357,24 @@ The Beat Repeat effect allows 3 output modes: Mix combines the original signal a
 ISSUES:
   ✗ [UI element capitalisation] "return track" should be capitalised — it's a named UI element (e.g. "Return Track").
 ============================================================
+
+============================================================
+[2026-05-11 22:05] Release Note — Stem Separation — Live 12.3
+Score: 9/10  |  Words: 93
+────────────────────────────────────────────────────────────
+SUBMISSION:
+To receive audio, you can navigate to your desired audio track and change the input source to one of the available devices on your network. Attention: audio buffer size can effect the quality of your incoming signal, so we recommend for streaming purposes that the receiving devices have a low buffer size and the outputing ones have a higher buffer size. For better quality, we recoomend using wired LAN connection with Link Audio. Wi-Fi is supported, but the quality of the audio stream is dependent on the quality and stability of the network.
+
+ISSUES:
+  ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
+============================================================
+
+============================================================
+[2026-05-11 22:08] Release Note — Stem Separation — Live 12.3
+Score: 10/10  |  Words: 70
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The names for active peers are shown in the new Link drop-down menu in the Control Bar. To receive audio, select a peer via the input type chooser on an audio track and then choose the specific source track with the input channel chooser. Make sure the audio track's monitoring state in Live is set to In to hear the incoming audio, as well as armed to record the audio.
+
+No issues found.
+============================================================

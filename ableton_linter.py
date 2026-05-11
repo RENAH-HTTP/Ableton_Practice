@@ -414,6 +414,10 @@ FILLER_PHRASES = [
     "it should be noted", "as you can see", "as mentioned",
 ]
 
+PARAM_VALUE_PATTERN = re.compile(
+    r'(?<!")-?\d+(?:\.\d+)?\s*(?:%|dB|Hz|kHz|BPM|bpm|ms)(?!")',
+)
+
 # ─────────────────────────────────────────────────────────────────────────────
 # INLINE HIGHLIGHT HELPERS
 # ─────────────────────────────────────────────────────────────────────────────
@@ -483,6 +487,9 @@ def get_mistake_spans(text):
         spans.append((m.start(), m.end()))
 
     for m in re.finditer(r'  ', text):
+        spans.append((m.start(), m.end()))
+
+    for m in PARAM_VALUE_PATTERN.finditer(text):
         spans.append((m.start(), m.end()))
 
     for m in re.finditer(r'\.\.\.', text):
@@ -833,6 +840,18 @@ def lint(text, entry_type):
         })
         score -= 1
 
+    # 20. Parameter value formatting
+    param_matches = list(PARAM_VALUE_PATTERN.finditer(text))
+    if param_matches:
+        examples = ", ".join(m.group(0).strip() for m in param_matches[:2])
+        issues.append({
+            "severity": "warning",
+            "rule": "Parameter value formatting",
+            "detail": f'Parameter values should be in double quotes: {examples}. Write "100%", "-6 dB", "440 Hz" etc.',
+            "penalty": 1,
+        })
+        score -= 1
+
     score = max(0, score)
     return issues, score, word_count
 
@@ -1087,6 +1106,7 @@ def show_feedback(entry_type, scenario, user_text, disputes=None):
         "Double spaces":               "Use a single space between words and after punctuation.",
         "Trailing ellipsis":           "'...' at the end signals an unfinished thought — not appropriate for release notes.",
         "Avoid etc.":                  "'etc.' is vague. Complete the list or write 'and other controls'.",
+        "Parameter value formatting":  'Place parameter values in double quotes: 100% is "100%", -6 dB is "-6 dB", 440 Hz is "440 Hz".',
     }
 
     issues, score, word_count = lint(user_text, entry_type)

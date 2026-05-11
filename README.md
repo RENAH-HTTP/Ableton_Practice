@@ -3,9 +3,9 @@
 ## Monday, 11 May
 
 #### Situation
-I noticed that values for parameters are put in brackets. 
-"Warning:" strucures are allowed.
-Also ":", also "()"
+- I noticed that values for parameters are put in brackets. 
+- "Warning:" strucures are allowed.
+- Also ":", also "()"
 
 In this example - the "return track" is not capitalized: The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track. Why?
 
@@ -114,7 +114,8 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 
 # Questions
 
-1. In this example - the **return track** is not capitalized: 
-"The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track."
-**Why?**
+1. In this example - the **return track** is not capitalized:
+
+- The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track.
+- **Why, since it is a UI element?**
 2. 

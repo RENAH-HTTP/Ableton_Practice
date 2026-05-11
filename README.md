@@ -25,8 +25,18 @@ Read the latest Release notes for Live 12.4 and 12.3 and extracted more style qu
 
 #### Result
 Improved quality and accuracy of replicating the format.
+
 Defining clearly between Release note format and Manual format
+
 - New info: "In the dedicated Link page new features were added:". Passive voice. The subject ("new features") is receiving the action rather than performing it.
+
+Found a gimmik to see if a text is passive voice or not 
+
+The zombie test: 
+
+"Two noise types are included in Erosion by zombies" — grammatically fine, so it's passive.
+
+"Erosion includes two noise types by zombies" — doesn't work, so it's active. 
 
 ## Sun, 10 May 
 

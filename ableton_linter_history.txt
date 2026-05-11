@@ -390,3 +390,27 @@ ISSUES:
   ⚠ [Paragraph length] This paragraph has 6 sentences — keep paragraphs to 4 sentences or fewer. Break dense paragraphs into smaller ones.
   ⚠ [Passive voice] Possible passive voice detected: "added", "enabled". Rewrite with an active subject where possible.
 ============================================================
+
+============================================================
+[2026-05-12 00:44] Release Note — Browser Filter View simplified
+Score: 8/10  |  Words: 9
+────────────────────────────────────────────────────────────
+SUBMISSION:
+In the dedicated Link page new features were added:
+
+ISSUES:
+  ⚠ [Passive voice] Possible passive voice detected: "added". Rewrite with an active subject where possible.
+  ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
+============================================================
+
+============================================================
+[2026-05-12 00:45] Release Note — Browser Filter View simplified
+Score: 8/10  |  Words: 45
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Sync to Incoming Audio — Enable this toggle when monitoring incoming audio from Link Audio peers in Live<. When enabled, Live's Link session is delayed by the set latency value. Note that all other peers in the session must have Monitoring Mode set to Off.
+
+ISSUES:
+  ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
+  ⚠ [Filler phrases] "note that" — these add no information. Cut them entirely.
+============================================================

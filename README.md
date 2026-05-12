@@ -1,5 +1,25 @@
 # Report
 
+## Tuesday, 12 May
+
+#### Situation
+THe Delay LFO device: two parameters — Wave and Morph — that users would need more documentation. (Wander) has ambiguous generation behavior. Morph's effect varies per shape — mechanism unknown.
+
+#### Task
+1. Document all 7 wave shapes with one-line active-voice descriptions.
+2. Clarify Wander — is it a continuously generated random signal, or does it trigger per cycle?
+3. Clarify Morph — what exactly does it transform per shape?
+4. Write the Morph parameter description once both unknowns resolved.
+
+#### Action
+Sine + Morph: "Morph skews the sine peak toward the rising or falling edge."
+Square + Morph: "Morph adjusts the pulse width of the square wave."
+These are hypothetical until confirmed. I have to ask the documentation team... 
+
+#### Result
+Passive-voice patterns identified and corrected. Morph partial draft ready. Two blockers surfaced as explicit questions rather than undocumented assumptions.
+
+
 ## Monday, 11 May
 
 #### Situation
@@ -145,4 +165,24 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 The original signal (which was received at Beat Repeat’s input) is mixed with Beat Repeat’s repetitions according to one of three mix modes: Mix allows the original signal to pass through the device and have repetitions added to it; Insert mutes the original signal when repetitions are playing but passes it otherwise; and Gate passes only the repetitions, never passing the original signal. Gate mode is especially useful when the effect is housed in a return track.
 ```
 - [Live Audio Effect Reference](https://www.ableton.com/en/live-manual/12/live-audio-effect-reference/#live-audio-effect-reference)
+
 - **Why, since it is a UI element?**
+
+### 2. Does Wander continuously generate a new random signal (smooth, unsynced, always moving), or does it produce a new random shape once per LFO cycle? 
+
+```
+Select one of the following LFO waveforms via the Wave drop-down: Sine, Triangle, Ramp Up, Ramp Down, Square, S&H (Sample and Hold), or Wander. You can further shape the selected waveform using the Morph slider.
+```
+- [Live Audio Effect Reference](https://www.ableton.com/en/live-manual/12/live-audio-effect-reference/#live-audio-effect-reference)
+
+- **Does Wander continuously generate a new random signal?**
+
+### 3. What does Morph specifically transform for each wave shape? For example — does it change pulse width on Square, skew the peak on Sine, bend the slope on Triangle? 
+
+```
+Select one of the following LFO waveforms via the Wave drop-down: Sine, Triangle, Ramp Up, Ramp Down, Square, S&H (Sample and Hold), or Wander. You can further shape the selected waveform using the Morph slider.
+```
+
+- [Live Audio Effect Reference](https://www.ableton.com/en/live-manual/12/live-audio-effect-reference/#live-audio-effect-reference)
+
+- **Does Wander continuously generate a new random signal?**

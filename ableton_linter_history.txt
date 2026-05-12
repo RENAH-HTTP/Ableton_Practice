@@ -414,3 +414,30 @@ ISSUES:
   ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
   ⚠ [Filler phrases] "note that" — these add no information. Cut them entirely.
 ============================================================
+
+============================================================
+[2026-05-12 22:18] Release Note — Stem Separation — Live 12.3
+Score: 10/10  |  Words: 38
+────────────────────────────────────────────────────────────
+SUBMISSION:
+The newest update bring to Delay new parameters that provide more modulation posibilities and LFO shapes. The LFO rate can now have as denominator either Hertz, miliseconds or it has the option to be tempo-synced to beat divisions.
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-12 22:19] Release Note — Stem Separation — Live 12.3
+Score: 9/10  |  Words: 161
+────────────────────────────────────────────────────────────
+SUBMISSION:
+You can toggle the newest LFO parameters navitating at the bottom of the Filter visualizer in the left corner. By toggling the the tab the following parameters will appear:
+- Rate (Frequency) - permits you to adjust the speed of the LFO in the selected measurement unit.
+- Measuring Unit - here you can toggle between Rate (Hertz), Time (miliseconds & seconds), Synced (note values, beats and bars, synced to the project tempo in binary divisions), Triplet (same as Synced, but in ternary divisions), Dotted (note values extended by half their length, e.g. a dotted 1/4 = 1.5 beats), 16th (note values subdivided into 16ths of a bar, the smallest standard grid division).
+- Wave - allows you to select from 7 different wave shapes (Sine, Triangle, Ramp Up, Ramp Down, Square, Sample & Hold - abreviated SH, and Wander - which is a random continously generated wavform).
+- Morph - you can use this parameter to shape the selected waveform.
+
+ISSUES:
+  ⚠ [Paragraph length] This paragraph has 6 sentences — keep paragraphs to 4 sentences or fewer. Break dense paragraphs into smaller ones.
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: Note isn't a UI elements but rather efers to musical note
+============================================================

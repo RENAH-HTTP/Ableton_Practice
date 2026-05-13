@@ -374,6 +374,11 @@ PASSIVE_PATTERNS = [
     r"\bis (shown|displayed|enabled|disabled|rendered|triggered|activated)\b",
 ]
 
+FUTURE_PASSIVE_PATTERNS = [
+    r"\bwill be (added|fixed|updated|changed|improved|removed|replaced|redesigned|renamed|enabled|disabled|done|released|available|supported|included)\b",
+    r"\bwould be (added|fixed|updated|changed|improved|removed|replaced|redesigned|renamed)\b",
+]
+
 ACRONYMS = {
     "midi": "MIDI", "mpe": "MPE", "cpu": "CPU", "gpu": "GPU",
     "vst": "VST", "au": "AU", "aax": "AAX", "daw": "DAW",
@@ -660,6 +665,22 @@ def lint(text, entry_type):
         })
         score -= 1
 
+    # 7a. Future passive voice — note only, no penalty
+    future_passive_found = []
+    for pat in FUTURE_PASSIVE_PATTERNS:
+        matches = re.findall(pat, lower)
+        if matches:
+            future_passive_found.extend(matches)
+
+    if future_passive_found:
+        examples = ", ".join(f'"{m}"' for m in future_passive_found[:2])
+        issues.append({
+            "severity": "info",
+            "rule": "Future passive voice",
+            "detail": f"Future passive detected: {examples}. Consider active form ('will add', 'will include') — no points deducted.",
+            "penalty": 0,
+        })
+
     # 8. Type-specific checks
     if entry_type == 3:  # Bug fix
         has_what_broke = any(w in lower for w in [
@@ -926,9 +947,12 @@ def print_issue(iss):
     if iss["severity"] == "error":
         icon  = red("  ✗")
         label = red(f"[{iss['rule']}]")
-    else:
+    elif iss["severity"] == "warning":
         icon  = yellow("  ⚠")
         label = yellow(f"[{iss['rule']}]")
+    else:  # info
+        icon  = cyan("  ℹ")
+        label = cyan(f"[{iss['rule']}]")
     detail = wrap(iss["detail"], width=66, indent="      ")
     print(f"{icon} {label}")
     print(col(C.DIM, detail))
@@ -1093,6 +1117,7 @@ def show_feedback(entry_type, scenario, user_text, disputes=None):
         "Do not start with I/We":      "Lead with the subject: the feature, the fix, or the user.",
         "UI element capitalisation":   "Named UI elements are proper nouns in Ableton docs. Capitalise them.",
         "Passive voice":               "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
+        "Future passive voice":        "Future passive ('will be added') is worth noting but not penalized. Active is clearer: 'will add', 'will include', 'will support'.",
         "Bug fix structure":           "Bug notes need two things: what broke and what now works.",
         "Release note structure":      "Release notes lead with what the user can DO, not what was added.",
         "Acronym capitalisation":      "MIDI, MPE, CPU, LFO, DAW etc. are always written in all-caps in Ableton docs.",

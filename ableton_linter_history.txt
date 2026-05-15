@@ -463,3 +463,76 @@ ISSUES:
   ⚠ [Weak sentence opener] "It is now possible to extract individual..." — avoid starting sentences with "There is/are" or "It is". Lead with the subject.
   ⚠ [Double spaces] Double spaces detected. Use a single space between words and after punctuation.
 ============================================================
+
+============================================================
+[2026-05-15 15:17] Bug Fix — Bounced track showing wrong track number
+Score: 8/10  |  Words: 16
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Improved content list load performance in the Plug-Ins browser when the creator grouping option is active.
+
+ISSUES:
+  ✗ [UI element capitalisation] "browser" should be capitalised — it's a named UI element (e.g. "Browser").
+  ⚠ [Bug fix structure] Bug fixes should describe what now works. Add what the user experiences after the fix.
+============================================================
+
+============================================================
+[2026-05-15 15:22] Release Note — Auto Filter new filter types — Live 12.2
+Score: 10/10  |  Words: 32
+────────────────────────────────────────────────────────────
+SUBMISSION:
+On Windows, you can now navigate backwards and forwards in the Browser by using the navigation buttons on the top left corner. This feature is available when Live's Browser is in focus
+
+No issues found.
+============================================================
+
+============================================================
+[2026-05-15 15:23] Release Note — Auto Filter new filter types — Live 12.2
+Score: 9/10  |  Words: 31
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Added step duration adjustment on the Launchky Mini MK4, Launchkey MK4, and Move. Now, holding the desired step and pressing the adjacent one, you prelond the duration of the initial step.
+
+ISSUES:
+  ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
+============================================================
+
+============================================================
+[2026-05-15 20:37] Bug Fix — Crash when undoing a Soundtoys plug-in load
+Score: 10/10  |  Words: 31
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Added step duration adjustment on the Launchky Mini MK4, Launchkey MK4, and Move. Now, holding the desired step and pressing the adjacent one, you prelond the duration of the initial step.
+
+ISSUES:
+  ⚠ [Bug fix structure] Bug fixes should describe what was broken. Include the trigger condition (when/where it happened).
+      ↳ DISPUTED: Yes, but here there was something added, and I described what was added an how to use it.
+============================================================
+
+============================================================
+[2026-05-15 20:51] Release Note — Komplete Kontrol S MK3 control surface update
+Score: 10/10  |  Words: 61
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Increased the resize area at the start and end of a MIDI note which allows to resize the the note. Now, MIDI notes can be resized by grabbing them slightly after or before their intended start. The new resizing area helps especially when, for example, notes are very short. Before, this type of resizing was only availble behind the note end.
+
+ISSUES:
+  ✗ [UI element capitalisation] "note" should be capitalised — it's a named UI element (e.g. "Note").
+      ↳ DISPUTED: note - not a ui
+  ⚠ [Release note structure] Release notes should describe what the user can now DO. Lead with a capability, action, or change.
+      ↳ DISPUTED: this is already in the improvemnts section which differes from the main section
+  ✗ [Grammar: allows/enables to] "allows to" and "enables to" are grammatically incorrect. Use "allows you to", "lets you", or "enables you to".
+      ↳ DISPUTED: not in this case, because this is in between a bug report and a release note
+============================================================
+
+============================================================
+[2026-05-16 01:00] Bug Fix — Sidechain export failure with Group Track source
+Score: 8/10  |  Words: 26
+────────────────────────────────────────────────────────────
+SUBMISSION:
+Fixed an issue where undoing a hot-swap to a Rack with fewer Macro Controls than the original wouldn't bring all the previously visible Macro Controls back.
+
+ISSUES:
+  ⚠ [Bug fix structure] Bug fixes should describe what now works. Add what the user experiences after the fix.
+  ✗ [No contractions] Contractions found: "wouldn't". Use the full form (e.g. "don't" → "do not").
+============================================================

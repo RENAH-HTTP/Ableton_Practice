@@ -648,22 +648,23 @@ def lint(text, entry_type):
                     score -= 1
                     break  # one flag per element
 
-    # 7. Passive voice
-    passive_found = []
-    for pat in PASSIVE_PATTERNS:
-        matches = re.findall(pat, lower)
-        if matches:
-            passive_found.extend(matches)
+    # 7. Passive voice (not checked for bug fixes — "Fixed a bug where..." is the standard form)
+    if entry_type != 3:
+        passive_found = []
+        for pat in PASSIVE_PATTERNS:
+            matches = re.findall(pat, lower)
+            if matches:
+                passive_found.extend(matches)
 
-    if passive_found:
-        examples = ", ".join(f'"{m}"' for m in passive_found[:2])
-        issues.append({
-            "severity": "warning",
-            "rule": "Passive voice",
-            "detail": f"Possible passive voice detected: {examples}. Rewrite with an active subject where possible.",
-            "penalty": 1,
-        })
-        score -= 1
+        if passive_found:
+            examples = ", ".join(f'"{m}"' for m in passive_found[:2])
+            issues.append({
+                "severity": "warning",
+                "rule": "Passive voice",
+                "detail": f"Possible passive voice detected: {examples}. Rewrite with an active subject where possible.",
+                "penalty": 1,
+            })
+            score -= 1
 
     # 7a. Future passive voice — note only, no penalty
     future_passive_found = []
@@ -682,30 +683,6 @@ def lint(text, entry_type):
         })
 
     # 8. Type-specific checks
-    if entry_type == 3:  # Bug fix
-        has_what_broke = any(w in lower for w in [
-            "fixed", "caused", "would", "when", "where", "issue", "crash", "bug", "fail", "incorrect", "wrong"
-        ])
-        has_what_works = any(w in lower for w in [
-            "now", "correctly", "no longer", "instead", "properly"
-        ])
-        if not has_what_broke:
-            issues.append({
-                "severity": "warning",
-                "rule": "Bug fix structure",
-                "detail": "Bug fixes should describe what was broken. Include the trigger condition (when/where it happened).",
-                "penalty": 1,
-            })
-            score -= 1
-        if not has_what_works:
-            issues.append({
-                "severity": "warning",
-                "rule": "Bug fix structure",
-                "detail": "Bug fixes should describe what now works. Add what the user experiences after the fix.",
-                "penalty": 1,
-            })
-            score -= 1
-
     if entry_type == 2:  # Release Note (new features / improvements)
         action_words = ["can now", "now ", "lets you", "allows you", "use ", "select ", "access ", "drag ", "right-click"]
         has_action = any(w in lower for w in action_words)
@@ -1118,7 +1095,6 @@ def show_feedback(entry_type, scenario, user_text, disputes=None):
         "UI element capitalisation":   "Named UI elements are proper nouns in Ableton docs. Capitalise them.",
         "Passive voice":               "Passive voice hides the subject. 'Fixed an issue' > 'An issue was fixed'.",
         "Future passive voice":        "Future passive ('will be added') is worth noting but not penalized. Active is clearer: 'will add', 'will include', 'will support'.",
-        "Bug fix structure":           "Bug notes need two things: what broke and what now works.",
         "Release note structure":      "Release notes lead with what the user can DO, not what was added.",
         "Acronym capitalisation":      "MIDI, MPE, CPU, LFO, DAW etc. are always written in all-caps in Ableton docs.",
         "No contractions":             "Technical documentation uses full forms: 'do not', 'cannot', 'it is'.",

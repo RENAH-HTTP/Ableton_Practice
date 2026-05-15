@@ -1,5 +1,73 @@
 # Report
 
+## Friday, 15 May
+
+#### Situation
+Three real entries from Ableton release notes. Unclear which tense rule applies to which.
+
+1. "The filter decay in Drum Sampler's 8bit effect can now be disabled by turning the decay parameter all the way up."
+2. "Parameter naming for the delay sections across devices has been improved."
+3. "Added new Audio Effect Racks (Vocal Strip Complete, Guitar Amp Stack)."
+
+#### Task
+Build a tense map — when do we use which form.
+
+#### Action
+
+Entry 1 → Release note. Present tense. "can now" = new user capability. ✓
+
+Entry 2 → Past passive. Vague. "has been improved" doesn't say what changed for the user.
+Better: "Delay section parameter names are now consistent across devices."
+
+Entry 3 → Past participle. "Added" = changelog bullet style.
+Weaker than user-facing. "You can now use Vocal Strip Complete and Guitar Amp Stack Audio Effect Racks." is stronger.
+
+Bug/fix entries → passive voice is standard here. "Fixed an issue where X was Y."
+Not the same as doc passive — it's the required form for fixes. Prominently passive, intentionally.
+
+Release notes = user perspective first. "Added X" = product side. "You can now use X" = user side. Always the second.
+
+#### Result
+
+Tense map:
+
+- Bug / Fix → past tense, passive is standard. "Fixed an issue where..."
+- Release note → present tense, user-first. "X can now Y." / "On [Platform], it is now possible to..."
+- Changelog bullet → past participle. "Added X." / "Improved Y." / "Updated Z."
+- Manual / instruction → imperative or present. "Select X", "Click Y", "Use X to Y"
+
+Key rule: release notes frame from the user's perspective, not the product's.
+
+---
+
+## Thursday, 14 May 
+
+#### Situation
+Release notes have different rules depending on what type of change it is. Updates, fixes, bugs — past tense, passive voice. Platform-specific stuff — you lead with the platform name. "On Windows,...", "On macOS,...". 
+
+Also ran into this example: "On Windows, it is now possible to navigate Live's browser forward and back with the mouse browser navigation buttons. This feature works when Live's browser is in focus." — wait, isn't browser a UI element? Should that be Browser? 
+
+#### Task
+Get the tense/voice rules straight for each release note type. Figure out if browser counts as a UI element or not.
+
+#### Action
+Tested a few release note entries against the patterns. Updates and bugs consistently use past passive — "was added", "was fixed", "has been updated". Platform entries always open with "On [Platform]:" and use present tense after. Two different contexts, two different rules.
+
+For browser — open question. It behaves like a named component. Probably should be capitalized. Ask the team.
+
+Updated the linter to reflect what I learned — added checks for past tense passive in fix/update entries and the "On [Platform]:" prefix pattern. Also created a dedicated Bug Fix Rules section at the bottom of this report next to the main rules.
+
+#### Result
+Two rules:
+
+1. Updates / fixes / bugs — past tense, passive voice.
+   "The issue was fixed where...", "A new option was added..."
+
+2. Platform-specific updates — lead with "On [Platform]:"
+   Present tense follows. "On macOS, it is now possible to..."
+
+3. Browser — probably a UI element. Probably Browser. Not confirmed yet.
+
 ## Wednesday, 13 May
 
 #### Situation
@@ -188,8 +256,16 @@ Created a cleaner mock-up and had now the tools to keep improving. I now had som
 **Release Note Only**
 1. Release note structure — must describe what the user can now DO (looks for: "can now", "lets you", "allows you", "use", "select", "access", etc.)
 
-**Bug Fix Only**
-1. Bug fix structure — must describe what broke (trigger condition) AND what now works (outcome after fix)
+# Bug Fix Rules
+
+1. Always lead with "Fixed" — "Fixed an issue where...", "Fixed a bug where...", "Fixed a crash that occurred when..."
+2. Platform-specific bugs — name the platform first. "Fixed an issue on macOS where...", "Fixed an issue on Windows where..."
+3. Describe the trigger — what action or condition caused the bug. Be specific.
+4. Describe the outcome — what now works. Can be a second sentence: "X now Y."
+5. Passive voice IS allowed here — "Fixed an issue where X was not Y" is the standard form. The linter skips passive checks in Bug Fix mode.
+6. Use bullet points for multiple related fixes in the same release.
+7. No crash without a trigger — "Fixed a crash" alone is not enough. State what caused it.
+8. All standard rules still apply — American English, UI element caps, no marketing, no dev jargon, no contractions, acronym caps, etc.
 
 #### Update Log
 - 11 May - added rule nr. 21 "Parameter Values"
@@ -239,3 +315,26 @@ Note that this mode is not yet implemented in Live, but is expected to be implem
 
 - [Release Notes Live 12.4](https://www.ableton.com/en/release-notes/live-12/)
 
+4. How can we decide what tense we use?
+
+```
+The filter decay in Drum Sampler's 8bit effect can now be disabled by turning the decay parameter all the way up.
+```
+
+```
+Parameter naming for the delay sections across devices has been improved.
+```
+
+this could be just improved something
+
+```
+Added new Audio Effect Racks (Vocal Strip Complete, Guitar Amp Stack). - for example ere we use added?
+```
+
+for example we use added?
+
+5. Duplicate!
+
+```
+Fixed an issue where it was not possible to navigate back to the Splice label with the Browse Back and Browse Forward buttons after navigating to other labels in the browser. This change also makes it possible to use these buttons to navigate to the Cloud label even when Cloud is not authorized, as well as to the Max for Live label even when Max is not available.
+```
